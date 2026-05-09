@@ -36,20 +36,20 @@ class Program
             string forecastUrl = $"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={apiKey}&units=metric";
             var forecastResponse = await client.GetStringAsync(forecastUrl);
             var fData = JsonDocument.Parse(forecastResponse);
-            var windSpeed = fData.RootElement.GetProperty("wind").GetProperty("speed").GetDouble();
-            var humidity = fData.RootElement.GetProperty("main").GetProperty("humidity").GetInt32();
-            var pressure = fData.RootElement.GetProperty("main").GetProperty("pressure").GetInt32();
             Console.WriteLine($"\n 5-hour forecast for {city}:");
             foreach (var item in fData.RootElement.GetProperty("list").EnumerateArray())
             {
                 if (count >= 5) break;
                 string dateTime = item.GetProperty("dt_txt").GetString() ?? "";
-                string time = dateTime.Split(' ')[1]; //this is to extract the time from the date and time
+                string time = dateTime.Split(' ')[1];
                 double temp = item.GetProperty("main").GetProperty("temp").GetDouble();
+                var humidity = item.GetProperty("main").GetProperty("humidity").GetInt32();
+                var pressure = item.GetProperty("main").GetProperty("pressure").GetInt32();
+                var windSpeed = item.GetProperty("wind").GetProperty("speed").GetDouble();
                 Console.WriteLine($"{time}: {temp}°C");
-                Console.WriteLine($"Humidity: {humidity}%");
-                Console.WriteLine($"Pressure: {pressure} hPa");
-                Console.WriteLine($"Wind Speed: {windSpeed} m/s");
+                Console.WriteLine($"  Humidity: {humidity}%");
+                Console.WriteLine($"  Pressure: {pressure} hPa");
+                Console.WriteLine($"  Wind Speed: {windSpeed} m/s");
                 count++;
             }
         }
@@ -66,9 +66,6 @@ class Program
             string forecastUrl = $"https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={apiKey}&units=metric";
             var forecastResponse = await client.GetStringAsync(forecastUrl);
             var fData = JsonDocument.Parse(forecastResponse);
-            var windSpeed = fData.RootElement.GetProperty("wind").GetProperty("speed").GetDouble();
-            var humidity = fData.RootElement.GetProperty("main").GetProperty("humidity").GetInt32();
-            var pressure = fData.RootElement.GetProperty("main").GetProperty("pressure").GetInt32();
 
             Console.WriteLine($"\n5-Day forecast for {city}:");
             
@@ -90,10 +87,13 @@ class Program
                 }
                 string time = dateTime.Split(' ')[1];
                 double temp = item.GetProperty("main").GetProperty("temp").GetDouble();
+                var humidity = item.GetProperty("main").GetProperty("humidity").GetInt32();
+                var pressure = item.GetProperty("main").GetProperty("pressure").GetInt32();
+                var windSpeed = item.GetProperty("wind").GetProperty("speed").GetDouble();
                 Console.WriteLine($"  {time}: {temp}°C");
-                Console.WriteLine($"  Humidity: {humidity}%");
-                Console.WriteLine($"  Pressure: {pressure} hPa");
-                Console.WriteLine($"  Wind Speed: {windSpeed} m/s");
+                Console.WriteLine($"    Humidity: {humidity}%");
+                Console.WriteLine($"    Pressure: {pressure} hPa");
+                Console.WriteLine($"    Wind Speed: {windSpeed} m/s");
             }
         }
         catch (Exception ex)
