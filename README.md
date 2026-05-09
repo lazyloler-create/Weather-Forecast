@@ -14,8 +14,7 @@ A C# console application that fetches weather data from OpenWeatherMap API.
    - Get your free API key
 
 2. **Configure the Application**
-   - Copy `appsettings.example.json` to `appsettings.json`
-   - Replace `YOUR_API_KEY_HERE` with your actual API key
+   - Create an appsettings.json
 
 3. **Run the Application**
    ```bash
@@ -27,6 +26,4 @@ A C# console application that fetches weather data from OpenWeatherMap API.
 - Enter a city name
 - View the weather forecast
 
-## Security
-⚠️ **Never commit `appsettings.json` to version control** - it contains your API key!
-The file is listed in `.gitignore` to prevent accidental commits.
+## Remember to add appsettings.json to .gitignore
