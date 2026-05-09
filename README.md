@@ -16,9 +16,13 @@ A C# console application that fetches weather data from OpenWeatherMap API.
 2. **Configure the Application**
    - Create an appsettings.json
 
-3. **Run the Application**
+3. **Build the Application**
    ```bash
-   dotnet run main.cs
+   dotnet build
+   ```
+4. **Run the Application**
+   ```bash
+   dotnet run
    ```
 
 ## Usage
