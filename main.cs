@@ -84,6 +84,7 @@ class Program
     }
     static async Task Main()
     {
+        // loads api key
         var config = new ConfigurationBuilder()
             .AddJsonFile("appsettings.json")
             .Build();
