@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using System.IO;
 
 class Program
 {
@@ -86,7 +87,8 @@ class Program
     {
         // loads api key
         var config = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
+            .SetBasePath(Directory.GetCurrentDirectory())
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
             .Build();
 
         string apiKey = config["OpenWeatherApiKey"] ?? "";
@@ -97,7 +99,7 @@ class Program
         }
         
         Console.WriteLine("═══════════════════════════════════════════════════════");
-        Console.WriteLine("\t\t★ Weather checker ★");
+        Console.WriteLine("\t\t★ Weather checker★");
         Console.WriteLine("═══════════════════════════════════════════════════════");
 
         Console.WriteLine("Options: ");
@@ -109,7 +111,7 @@ class Program
         int choice = int.Parse(Console.ReadLine());
 
         Console.WriteLine("Enter a city name:");
-        string? city = Console.ReadLine();
+        string city = Console.ReadLine();
         string url = $"https://api.openweathermap.org/data/2.5/weather?q={city}&appid={apiKey}&units=metric";
         using HttpClient client = new HttpClient();
 
